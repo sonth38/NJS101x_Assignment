@@ -1,42 +1,33 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const staffSchema = new Schema({
   name: {
-    type: String,
-    required: true,
+    type: String
   },
   doB: {
-    type: Date,
-    required: true,
+    type: Date
   },
   salaryScale: {
-    type: Number,
-    required: true,
+    type: Number
   },
   startDate: {
-    type: Date,
-    required: true,
+    type: Date
   },
   department: {
     type: String,
-    required: true,
+    default: 'Company'
   },
   annualLeave: {
-    type: Number,
-    required: true,
+    type: Number
   },
   image: {
     type: String,
     required: true,
   },
-  workPlace: {
-    type: String,
-    required: true,
-  },
   workTimes: [
     {
-      startTime: { type: Date, default: new Date() },
+      startTime: { type: Date },
       workPlace: { type: String },
       working: { type: Boolean },
       endTime: { type: Date },
@@ -76,4 +67,15 @@ const userSchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model("user", userSchema);
+staffSchema.methods.addWorkTimes = function (newWorkTimes) {
+  if (this.workTimes.length < 0) {
+      return this.save();
+  } else {
+      const updateWorkTimes = [...this.workTimes];
+      updateWorkTimes.push(newWorkTimes);
+      this.workTimes = updateWorkTimes;
+      return this.save();
+  }
+};
+
+module.exports = mongoose.model("staff", staffSchema);
