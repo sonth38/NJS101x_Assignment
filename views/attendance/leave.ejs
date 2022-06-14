@@ -1,0 +1,74 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/datePick.css">
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+        <main>
+            <%- include('../includes/checkin-checkout.ejs') %>
+                <div class="container">
+                    <div class="row">
+                        <form action="/leave" method="POST">
+                            <div class="mt-2">
+                                <label
+                                    for="pickDateLeave"
+                                    class="form-label">Chọn ngày nghỉ phép
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control date"
+                                    id="pickDateLeave"
+                                    name="dateLeave"
+                                    placeholder="Chọn ngày bạn xin nghỉ">
+                            </div>
+                            <div class="mt-2">
+                                <label
+                                    for="reasonLeave"
+                                    class="form-label">Lý do nghỉ phép
+                                </label>
+                                <textarea 
+                                    class="form-control" id="reasonLeave"
+                                    rows="3" placeholder="Lý do bạn xin nghỉ"
+                                    name="reasonLeave"
+                                ></textarea>
+                            </div>
+                            <div class="mt-2">
+                                <label 
+                                    for="countdownAnnualLeave"
+                                    class="form-label"
+                                >Số ngày nghỉ còn lại
+                                </label>
+                                <input
+                                    type="text" class="form-control"
+                                    id="countdownAnnualLeave" disabled
+                                    name="annualLeave"
+                                    value="<%=annualLeave%>"
+                                >
+                            </div>
+                            <div class="mt-2">
+                                <label 
+                                    for="hourLeave"
+                                    class="form-label"
+                                >Chọn số giờ sẽ nghỉ
+                                </label>
+                                <input type="number" class="form-control"
+                                    id="hourLeave" 
+                                    placeholder="Chọn số giờ bạn xin nghỉ"
+                                    name="hourLeave"
+                                >
+                            </div>
+                            <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+                                <button 
+                                    class="btn btn-primary" type="submit" 
+                                    <% if(annualLeave==0) {%><%='disabled' %> <%}%>
+                                >Đăng ký
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+        </main>
+
+                    <%- include('../includes/end.ejs') %>

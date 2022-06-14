@@ -1,0 +1,28 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <%- include('../includes/checkin-checkout.ejs') %>
+        <div class="container">
+            <div class="row">
+                <h3>Số Giờ Đã Làm Hôm Nay: <%= timeWorked%> Giờ</h3>
+                <h3>Danh sách các lượt bắt đầu, kết thúc:</h3>
+                <ul class="list-group">
+                    <% workedInDay.workTimeInDay.forEach(workTime=> {%>
+                        <li class="list-group-item">
+                            <p>Bắt Đầu: <%=workTime.startTime.toLocaleString()%></p>
+                            <p>Kết thúc: <%=workTime.endTime.toLocaleString()%></p>
+                            <p>
+                                Nơi làm Việc:<%= workTime.workPlace==='home' ? ' Nhà' : workTime.workPlace==='company'
+                                    ? ' Công ty' : ' Khách Hàng' %>
+                            </p>
+                        </li>
+                        <% })%>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+<%- include('../includes/end.ejs') %>

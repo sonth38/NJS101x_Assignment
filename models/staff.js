@@ -3,23 +3,23 @@ const Schema = mongoose.Schema;
 
 const staffSchema = new Schema({
   name: {
-    type: String
+    type: String,
   },
   doB: {
-    type: Date
+    type: Date,
   },
   salaryScale: {
-    type: Number
+    type: Number,
   },
   startDate: {
-    type: Date
+    type: Date,
   },
   department: {
     type: String,
-    default: 'Company'
+    default: 'Company',
   },
   annualLeave: {
-    type: Number
+    type: Number,
   },
   image: {
     type: String,
@@ -35,9 +35,9 @@ const staffSchema = new Schema({
   ],
   leaveInfoList: [
     {
-      daysLeave: { type: String },
-      timesLeave: { type: Number },
-      reason: { type: String },
+      dateLeave: { type: String },
+      hourLeave: { type: Number },
+      reasonLeave: { type: String },
     },
   ],
   bodyTemperature: [
@@ -67,15 +67,50 @@ const staffSchema = new Schema({
   ],
 });
 
+// Thêm giờ điểm danh
 staffSchema.methods.addWorkTimes = function (newWorkTimes) {
   if (this.workTimes.length < 0) {
-      return this.save();
+    return this.save();
   } else {
-      const updateWorkTimes = [...this.workTimes];
-      updateWorkTimes.push(newWorkTimes);
-      this.workTimes = updateWorkTimes;
-      return this.save();
+    const updateWorkTimes = [...this.workTimes];
+    updateWorkTimes.push(newWorkTimes);
+    this.workTimes = updateWorkTimes;
+    return this.save();
   }
 };
 
-module.exports = mongoose.model("staff", staffSchema);
+// Thêm giờ kết thúc làm
+staffSchema.methods.addEndWorkTimes = function (newEndTime) {
+  if (this.workTimes[this.workTimes.length - 1].endTime === null) {
+    const lastWorkTime = this.workTimes[this.workTimes.length - 1];
+    const updateWorkTime = (lastWorkTime.endTime = newEndTime.endTime);
+
+    this.workTime = updateWorkTime;
+    return this.save();
+  } else {
+    return this.save();
+  }
+};
+
+// Tính số giờ nghỉ
+staffSchema.methods.updateLeave = function (leaveInfo) {
+  const dateLeave =leaveInfo.dateLeave  //ngày nghỉ đăng ký
+  const hourLeave =leaveInfo.hourLeave  // số giờ nghỉ đăng ký
+  const countdownHourAnnualLeave = this.annualLeave * 8   // số giờ nghỉ còn lại
+  const singleDateLeave = dateLeave.split(',')
+  console.log('annualLeave lúc trước',this.annualLeave)
+  // Kiểm tra số giờ nghỉ đăng ký <= số giờ nghỉ còn lại
+  // && số giờ nghỉ đăng ký <= số ngày nghỉ đăng ký * 8h 
+  if (hourLeave <= countdownHourAnnualLeave && hourLeave <= singleDateLeave.length * 8) {
+    this.annualLeave = this.annualLeave - hourLeave / 8
+    console.log('annualLeave lúc sau',this.annualLeave)
+  }
+
+  // update leaveInfoList
+  const updatedLeaveInfoList = [...this.leaveInfoList];
+  updatedLeaveInfoList.push(leaveInfo);
+  this.leaveInfoList = updatedLeaveInfoList;
+  return this.save();
+};
+
+module.exports = mongoose.model('staff', staffSchema);

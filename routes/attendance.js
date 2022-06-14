@@ -5,9 +5,19 @@ const attendanceController = require('../controller/attendanceController')
 
 
 router.get('/', attendanceController.getIndex)
+// Check-in
 router.get('/check-in', attendanceController.getCheckin)
 router.post('/check-in/start', attendanceController.postCheckin)
 router.get('/check-in/infor', attendanceController.getCheckinInfor)
+
+// Check-out
+router.post('/check-out', attendanceController.postCheckout)
+router.get('/check-out/infor', attendanceController.getCheckoutInfo)
+
+// Leave
+router.get('/leave', attendanceController.getLeave)
+router.post('/leave', attendanceController.postLeave)
+router.get('/leaveInfo', attendanceController.getLeaveInfo)
 
 
 module.exports = router
