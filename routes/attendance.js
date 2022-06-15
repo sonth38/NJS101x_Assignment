@@ -3,8 +3,6 @@ const router = express.Router()
 
 const attendanceController = require('../controller/attendanceController')
 
-
-router.get('/', attendanceController.getIndex)
 // Check-in
 router.get('/check-in', attendanceController.getCheckin)
 router.post('/check-in/start', attendanceController.postCheckin)

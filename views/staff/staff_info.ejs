@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <div class="container">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="<%=staff.image%>" class="img-fluid rounded-start" alt="staffs image">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=staff.name%></h5>
+                      <p class="card-text">ID: <%=staff._id%></p>
+                      <p class="card-text">DoB: <%=staff.doB.toLocaleString('vi-VN', {year: 'numeric', month: 'numeric', day: 'numeric'})%></p>
+                      <p class="card-text">SalaryScale: <%=staff.salaryScale%></p>
+                      <p class="card-text">StartDate: <%=staff.startDate%></p>
+                      <p class="card-text">Department: <%=staff.department%></p>
+                      <p class="card-text">AnnualLeave: <%=staff.annualLeave%></p>
+                      <p class="card-text"><small class="text-muted">Lasted updated</small></p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<%- include('../includes/end.ejs') %>

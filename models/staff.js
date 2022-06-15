@@ -113,4 +113,10 @@ staffSchema.methods.updateLeave = function (leaveInfo) {
   return this.save();
 };
 
+// Cập nhật ảnh đại diện
+staffSchema.methods.updateImageStaff = function(image) {
+  this.image = image
+  return this.save()
+}
+
 module.exports = mongoose.model('staff', staffSchema);

@@ -1,20 +1,12 @@
 const Staff = require('../models/staff')
 const Methods = require('../util/method')
 
-// [GET]  /
-exports.getIndex = (req, res, next) => {
-  res.render('attendance/attendance', {
-    path: '/',
-    pageTitle: 'Trang chủ',
-  });
-};
-
 // [GET] /check-in
 exports.getCheckin = (req, res, next) => {
   Staff.findOne()
     .then(staff => {
       res.render('attendance/checkin', {
-        path: '/check-in',
+        path: '/attendance',
         pageTitle: 'Điểm danh',
         staff: staff
       });
@@ -37,7 +29,7 @@ exports.postCheckin = (req, res, next) => {
     .addWorkTimes(newWorkTimes)
     .then(result => {
       console.log(result)
-      res.redirect('/check-in/infor');
+      res.redirect('/attendance/check-in/infor');
     })
     .catch(error => {
       console.log(error);
@@ -64,7 +56,7 @@ exports.postCheckout = (req, res, next) => {
   req.staff
     .addEndWorkTimes(endWorkTimes)
     .then(result => {
-      res.redirect('/check-out/infor');
+      res.redirect('/attendance/check-out/infor');
     })
     .catch(error => {
       console.log(error);
@@ -106,7 +98,7 @@ exports.postLeave = (req, res, next) => {
       reasonLeave: req.body.reasonLeave,
     })
     .then(() => {
-      res.redirect('/leaveInfo');
+      res.redirect('/attendance/leaveInfo');
     })
     .catch(error => {
       console.log(error);

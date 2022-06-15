@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
 
-const attendanceRouter = require('./routes/attendance')
+const router = require('./routes/index');
 
 const Staff = require('./models/staff')
 
@@ -31,10 +31,10 @@ app.use((req, res, next) => {
         });
 });
 
-// Điều hướng đến attendance
-app.use(attendanceRouter)
+// Init router
+router(app);
 
-// Điều hướng đến trang lỗi 404
+//Điều hướng đến trang lỗi 404
 app.use((req, res, next) => {
     res.status(404).render('404', { pageTitle: 'Page Not Found', path: ''})
 })

@@ -15,10 +15,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+          <a class="nav-link <%= path == '/attendance' ? 'active' : ''%> "  href="/">Trang chủ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Thông tin cá nhân</a>
+          <a class="nav-link <%= path == '/staff' ? 'active' : ''%> " href="/staff">Thông tin cá nhân</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Thông tin giờ làm</a>
