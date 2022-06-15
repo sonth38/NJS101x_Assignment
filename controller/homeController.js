@@ -1,6 +1,6 @@
 // [GET]  /
 exports.getIndex = (req, res, next) => {
-  res.render('attendance/attendance', {
+  res.render('home/home', {
     path: '/attendance',
     pageTitle: 'Trang chủ',
   });

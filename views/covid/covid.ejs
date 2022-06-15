@@ -1,0 +1,78 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <form action="/covid/temperature" method="post">
+                        <h5>Thông tin thân nhiệt</h5>
+                        <div class="mb-3">
+                            <label for="temperature" class="form-label">Temperature</label>
+                            <input type="number" class="form-control" id="temperature" name="temperature" step="0.1" min="35" max="40">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="time" class="form-label">Time</label>
+                            <input type="time" class="form-control" id="time" name="time" >
+                        </div>
+                        <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <p><%= alert == 'Nhiệt độ' ? 'Cập nhât nhiệt độ thành công' : ''%></p>
+                    </form>
+                </div>
+                <div class="col-4">
+                    <form action="/covid/injection" method="post">
+                        <h5>Thông tin mũi tiêm</h5>
+                        <div class="mb-3">
+                            <label for="nameFirstVaccine" class="form-label">Tên vaccine mũi 1</label>
+                            <input type="text" class="form-control" id="nameFirstVaccine" name="nameFirstVaccine">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateFirstVaccine" class="form-label">Ngày tiêm mũi 1</label>
+                            <input type="date" class="form-control" id="dateFirstVaccine" name="dateFirstVaccine" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameSecondVaccine" class="form-label">Tên vaccine mũi 2</label>
+                            <input type="text" class="form-control" id="nameSecondVaccine" name="nameSecondVaccine">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateSecondVaccine" class="form-label">Ngày tiêm mũi 2</label>
+                            <input type="date" class="form-control" id="dateSecondVaccine" name="dateSecondVaccine" >
+                        </div>
+                        <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <p><%= alert == 'Injection' ? 'Cập nhật mũi tiêm thành công' : ''%></p>
+                    </form>
+                </div>
+                <div class="col-4">
+                    <form action="/covid/infect" method="post">
+                        <h5>Thông tin dương tính</h5>
+                        <div class="mb-3">
+                            <label for="datePositive" class="form-label">Ngày dương tính</label>
+                            <input type="date" class="form-control" id="datePositive" name="datePositive">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateRecover" class="form-label">Ngày khỏi bệnh</label>
+                            <input type="date" class="form-control" id="dateRecover" name="dateRecover">
+                        </div>
+                        <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <p><%= alert == 'Infect' ? 'Cập nhật thông tin thành công' : ''%></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+    </main>
+
+<%- include('../includes/end.ejs') %>

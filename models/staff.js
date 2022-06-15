@@ -119,4 +119,35 @@ staffSchema.methods.updateImageStaff = function(image) {
   return this.save()
 }
 
+// Cập nhật thân nhiệt
+staffSchema.methods.updateTemperature = function(bodyTemperature) {
+    if (this.bodyTemperature.length < 0) {
+        return this.save();
+    } else {
+        const addbodyTemperature = [...this.bodyTemperature];
+        addbodyTemperature.push(bodyTemperature);
+        this.bodyTemperature = addbodyTemperature;
+        return this.save();
+    }
+}
+
+// Cập nhật thân nhiệt
+staffSchema.methods.updateInjection = function(vaccineInfo) {
+  const firstVaccineInfo = {nameVaccine: vaccineInfo.nameFirstVaccine, date: vaccineInfo.dateFirstVaccine}
+  const secondVaccineInfo = {nameVaccine: vaccineInfo.nameSecondVaccine, date: vaccineInfo.dateSecondVaccine}
+  this.vaccineInfo.push(firstVaccineInfo,secondVaccineInfo)
+  return this.save()
+}
+
+// Cập nhật thông tin dương tính Covid
+staffSchema.methods.updateInfect = function(infectCovidInfo) {
+  if (this.infectCovidInfo.length < 0) {
+      return this.save();
+  } else {
+      const addInfectCovidInfo = [...this.infectCovidInfo];
+      addInfectCovidInfo.push(infectCovidInfo);
+      this.infectCovidInfo = addInfectCovidInfo;
+      return this.save();
+  }
+}
 module.exports = mongoose.model('staff', staffSchema);
