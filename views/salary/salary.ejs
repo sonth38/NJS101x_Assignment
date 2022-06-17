@@ -1,0 +1,76 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <div class="container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Ngày</th>
+                    <th scope="col">Nơi làm việc</th>
+                    <th scope="col">Giờ bắt đầu</th>
+                    <th scope="col">Giờ kết thúc</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <h4>Thông tin giờ làm</h4>
+                    <% workTimesLastDay.forEach(workTime=>{%>
+                        <tr>
+                            <td>
+                                <%=workTime.startTime.getDate()%>
+                            </td>
+                            <td>
+                                <%= workTime.workPlace==='home' ? ' Nhà' : workTime.workPlace==='company' ? ' Công ty'
+                                : ' Khách Hàng' %>
+                            </td>
+                            <td>
+                                <%=workTime.startTime.getHours()%>:<%=workTime.startTime.getMinutes()%>'
+                            </td>
+                            <% if (workTime.endTime) { %>
+                            <td>
+                                <%=workTime.endTime.getHours()%>:<%=workTime.endTime.getMinutes()%>'
+                            </td>
+                            <% } else { %>
+                            <td>
+                                --
+                            </td>
+                            <% } %>
+                        </tr>
+                    <% } )%>
+                </tbody>
+            </table>
+                <p>Số giờ làm thêm trong ngày: <%=overTime%></p>
+                <% if (timeWorked) { %>
+                <p>Tổng số giờ làm trong ngày: <%=timeWorked%></p>
+                <% } else { %>
+                <p>Tổng số giờ làm trong ngày: Chưa kết thúc</p>
+                <% } %> 
+        </div>
+        <div class="container">
+            <div class="row">
+                <h4>Chi tiết lương</h4>
+                <form action="/salary" method="POST">
+                    <label for="month">Tháng</label>
+                    <select  name="month" id="month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <button type="submit">Show</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+<%- include('../includes/end.ejs') %>

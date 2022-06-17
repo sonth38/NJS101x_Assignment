@@ -25,8 +25,8 @@ class Methods {
 
   // Tính thời gian làm việc
   calculateTimeWorked = staff => {
-    let totalTimeWorked = 0;
-    const workTimeInDay = [];
+    let totalTimeWorked = 0
+    const workTimeInDay = []
     const WorkTimesLength = staff.workTimes.length;
     let day = staff.workTimes[WorkTimesLength - 1].startTime.getDate();
 
@@ -40,15 +40,16 @@ class Methods {
 
     workTimeInDay.forEach(workTime => {
       // Tính số giờ làm việc
-      const minutesStart =
-        workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
-      const minutesEnd =
-        workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
-      const totalHourCalculate = (minutesEnd - minutesStart) / 60;
+      if (workTime.endTime != null) {
+        const minutesStart =
+          workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
+        const minutesEnd =
+          workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+        const totalHourCalculate = (minutesEnd - minutesStart) / 60;
 
-      return (totalTimeWorked = totalTimeWorked + totalHourCalculate);
+        return (totalTimeWorked = totalTimeWorked + totalHourCalculate);
+      }
     });
-
     return { totalTimeWorked, workTimeInDay, day };
   };
 
@@ -58,6 +59,48 @@ class Methods {
     const newsLeaveInfo = staff.leaveInfoList[LeaveInfoLength - 1]
     return newsLeaveInfo
   }
+
+  // Tính overTime
+  overTime = staff => {
+    let totalTimeWorkedLastDay = 0
+    let overTime = 0
+    const WorkTimesLength = staff.workTimes.length;
+    let lastedDay = staff.workTimes[WorkTimesLength - 1].startTime.getDate();
+    
+    // Lấy ra ngày làm việc gần đây nhất
+    const workTimesLastDay = staff.workTimes.filter((workTime) => {
+      return workTime.startTime.getDate() == lastedDay
+    })
+    
+    // Tính tổng thời giam làm việc ngày gần đây nhất
+    workTimesLastDay.forEach(workTime => {
+      // Tính số giờ làm việc
+      if (workTime.endTime != null) {
+        const minutesStartLastDay =
+          workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
+        const minutesEndLastDay =
+          workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+        const totalHourCalculateLastDay = (minutesEndLastDay - minutesStartLastDay) / 60;
+        return (totalTimeWorkedLastDay = totalTimeWorkedLastDay + totalHourCalculateLastDay);
+      }
+    });
+    if (totalTimeWorkedLastDay > 8) {
+      return overTime = totalTimeWorkedLastDay - 8
+    }
+    return { overTime, workTimesLastDay }
+  }
 }
+
+getSalary = (month, staff) => {
+  // Lấy ra workTime có tháng được chọn
+  const workTimeInMonth = staff.workTimes.filter(workTime => {
+    if (workTime.endTime !== null) {
+      return workTime.startTime.getMonth() == 5
+    }
+  })
+
+  // Lấy số ngày checkin-checkout trong tháng được chọn
+
+};
 
 module.exports = new Methods();

@@ -31,6 +31,7 @@ const staffSchema = new Schema({
       workPlace: { type: String },
       working: { type: Boolean },
       endTime: { type: Date },
+      timeworking: { type: Number }
     },
   ],
   leaveInfoList: [
@@ -84,12 +85,14 @@ staffSchema.methods.addEndWorkTimes = function (newEndTime) {
   if (this.workTimes[this.workTimes.length - 1].endTime === null) {
     const lastWorkTime = this.workTimes[this.workTimes.length - 1];
     const updateWorkTime = (lastWorkTime.endTime = newEndTime.endTime);
-
     this.workTime = updateWorkTime;
+
     return this.save();
   } else {
     return this.save();
   }
+
+
 };
 
 // Tính số giờ nghỉ
@@ -150,4 +153,5 @@ staffSchema.methods.updateInfect = function(infectCovidInfo) {
       return this.save();
   }
 }
+
 module.exports = mongoose.model('staff', staffSchema);

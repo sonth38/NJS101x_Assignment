@@ -12,7 +12,7 @@ router.get('/check-in/infor', attendanceController.getCheckinInfor)
 router.post('/check-out', attendanceController.postCheckout)
 router.get('/check-out/infor', attendanceController.getCheckoutInfo)
 
-// Leave
+// Leave -- Nghỉ phép
 router.get('/leave', attendanceController.getLeave)
 router.post('/leave', attendanceController.postLeave)
 router.get('/leaveInfo', attendanceController.getLeaveInfo)
