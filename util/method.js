@@ -47,7 +47,7 @@ class Methods {
           workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
         const totalHourCalculate = (minutesEnd - minutesStart) / 60;
 
-        return (totalTimeWorked = totalTimeWorked + totalHourCalculate);
+        return (totalTimeWorked = (totalTimeWorked + totalHourCalculate).toFixed(2));
       }
     });
     return { totalTimeWorked, workTimeInDay, day };
@@ -101,7 +101,6 @@ class Methods {
       }
     })
     
-    console.log(workTimeInMonth)
     // Tổng số giờ nếu làm đủ
     const fullTimeWork = workTimeInMonth.length * 8
     
@@ -118,10 +117,10 @@ class Methods {
     });
   
     // Tổng thời gian làm đủ trừ thời gian checkin-checkout
-    const timeWorkSalary = fullTimeWork - totalTimeWorked
-    console.log(fullTimeWork)
-    console.log(timeWorkSalary)
-    return (staff.salaryScale * 3000000 + timeWorkSalary * 200000 )
+    const timeWorkSalary = (fullTimeWork - totalTimeWorked).toFixed(2)
+
+    const salary = staff.salaryScale * 3000000 + timeWorkSalary * 200000
+    return { salary, timeWorkSalary}
   };
 }
 

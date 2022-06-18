@@ -50,6 +50,30 @@
         </div>
         <hr>
         <div class="container">
+            <h4>Danh sách đăng ký nghỉ phép</h4>
+            <table class="table">
+                <tr>
+                    <th>Ngày</th>
+                    <th scope="col">Số Giờ</th>
+                    <th scope="col">Lý do</th>
+                </tr>
+                <%staff.leaveInfoList.forEach(leaveInfo=> {%>
+                    <tr>
+                        <td>
+                            <%=leaveInfo.dateLeave%>
+                        </td>
+                        <td >
+                            <%=leaveInfo.hourLeave%>
+                        </td>
+                        <td >
+                            <%=leaveInfo.reasonLeave%>
+                        </td>
+                    </tr>
+                <%})%>
+            </table>
+        </div>
+        <hr>
+        <div class="container">
             <div class="row">
                 <h4>Chi tiết lương</h4>
                 <form action="/salary" method="POST">
@@ -70,7 +94,10 @@
                     </select>
                     <button type="submit">Show</button>
                 </form>
-                <p>Tiền lương tháng: <%= salary %></p>
+                <% if (salary != null) { %>
+                    <p>Tiền lương tháng: <%= salary %></p>
+                    <p>Công thức : <%= staff.salaryScale %> * 3000000 + <%= timeWorkSalary %> * 200000</p>
+                <% } %>
             </div>
         </div>
     </main>

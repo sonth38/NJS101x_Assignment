@@ -15,7 +15,8 @@ exports.getIndex = (req, res, next) => {
       overTime,
       workTimesLastDay,
       totalTimeWorkEach,
-      salary: null
+      salary: null,
+      timeWorkSalary: ''
     });
 };
 
@@ -24,7 +25,8 @@ exports.postSalary = (req, res, next) => {
     const overTime = Methods.overTime(req.staff).overTime
     const workTimesLastDay = Methods.overTime(req.staff).workTimesLastDay
     const totalTimeWorkEach = Methods.overTime(req.staff).totalTimeWorkEach
-    const salary = Methods.getSalary(req.body.month, req.staff)
+    const salary = Methods.getSalary(req.body.month, req.staff).salary
+    const timeWorkSalary = Methods.getSalary(req.body.month, req.staff).timeWorkSalary
 
     res.render('salary/salary', {
       path: '/salary',
@@ -34,6 +36,7 @@ exports.postSalary = (req, res, next) => {
       overTime,
       workTimesLastDay,
       totalTimeWorkEach,
-      salary
+      salary,
+      timeWorkSalary
     });
   };

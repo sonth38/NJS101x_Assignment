@@ -153,4 +153,10 @@ staffSchema.methods.updateInfect = function(infectCovidInfo) {
   }
 }
 
+staffSchema.methods.showAnnualLeave = function(staff) {
+  const initialAnnualLeave = 12
+  const annualLeave = staff.annualLeave
+  const restAnnualLeave = initialAnnualLeave - annualLeave
+}
+
 module.exports = mongoose.model('staff', staffSchema);
