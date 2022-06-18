@@ -6,7 +6,7 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-md-4 col-sm-12">
                     <form action="/covid/temperature" method="post">
                         <h5>Thông tin thân nhiệt</h5>
                         <div class="mb-3">
@@ -27,7 +27,7 @@
                         <p><%= alert == 'Nhiệt độ' ? 'Cập nhât nhiệt độ thành công' : ''%></p>
                     </form>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-sm-12">
                     <form action="/covid/injection" method="post">
                         <h5>Thông tin mũi tiêm</h5>
                         <div class="mb-3">
@@ -52,7 +52,7 @@
                         <p><%= alert == 'Injection' ? 'Cập nhật mũi tiêm thành công' : ''%></p>
                     </form>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4 col-sm-12">
                     <form action="/covid/infect" method="post">
                         <h5>Thông tin dương tính</h5>
                         <div class="mb-3">
