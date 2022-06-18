@@ -30,8 +30,7 @@ const staffSchema = new Schema({
       startTime: { type: Date },
       workPlace: { type: String },
       working: { type: Boolean },
-      endTime: { type: Date },
-      timeworking: { type: Number }
+      endTime: { type: Date }
     },
   ],
   leaveInfoList: [

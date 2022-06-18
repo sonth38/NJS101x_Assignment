@@ -7,14 +7,6 @@ exports.getIndex = (req, res, next) => {
     const workTimesLastDay = Methods.overTime(req.staff).workTimesLastDay
     const totalTimeWorkEach = Methods.overTime(req.staff).totalTimeWorkEach
 
-    const workTimeInMonth = req.staff.leaveInfoList.filter(leaveList => {
-     
-        return leaveList.daysLeave.getMonth() == 5
-    })
-
-    console.log(workTimeInMonth)
-
-
     res.render('salary/salary', {
       path: '/salary',
       pageTitle: 'Thông tin giờ làm',
@@ -23,6 +15,7 @@ exports.getIndex = (req, res, next) => {
       overTime,
       workTimesLastDay,
       totalTimeWorkEach,
+      salary: null
     });
 };
 
@@ -41,5 +34,6 @@ exports.postSalary = (req, res, next) => {
       overTime,
       workTimesLastDay,
       totalTimeWorkEach,
+      salary
     });
   };

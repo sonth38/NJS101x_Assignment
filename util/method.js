@@ -89,18 +89,40 @@ class Methods {
     }
     return { overTime, workTimesLastDay }
   }
+
+  getSalary = (month, staff) => {
+    
+    // Lấy ra workTime có tháng được chọn
+    const monthNumber = Number(month)
+
+    const workTimeInMonth = staff.workTimes.filter(workTime => {
+      if (workTime.endTime !== null) {
+        return (workTime.startTime.getMonth() + 1 == monthNumber)
+      }
+    })
+    
+    console.log(workTimeInMonth)
+    // Tổng số giờ nếu làm đủ
+    const fullTimeWork = workTimeInMonth.length * 8
+    
+    // Tính tổng thời gian checkin - checkout của tháng được chọn
+    let totalTimeWorked = 0
+    workTimeInMonth.forEach(workTime => {
+      // Tính số giờ làm việc
+        const minutesStart =
+          workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
+        const minutesEnd =
+          workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+        const totalHourCalculate = (minutesEnd - minutesStart) / 60;
+        return (totalTimeWorked = totalTimeWorked + totalHourCalculate);
+    });
+  
+    // Tổng thời gian làm đủ trừ thời gian checkin-checkout
+    const timeWorkSalary = fullTimeWork - totalTimeWorked
+    console.log(fullTimeWork)
+    console.log(timeWorkSalary)
+    return (staff.salaryScale * 3000000 + timeWorkSalary * 200000 )
+  };
 }
-
-getSalary = (month, staff) => {
-  // Lấy ra workTime có tháng được chọn
-  const workTimeInMonth = staff.workTimes.filter(workTime => {
-    if (workTime.endTime !== null) {
-      return workTime.startTime.getMonth() == 5
-    }
-  })
-
-  // Lấy số ngày checkin-checkout trong tháng được chọn
-
-};
 
 module.exports = new Methods();
