@@ -69,14 +69,13 @@ const staffSchema = new Schema({
 
 // Thêm giờ điểm danh
 staffSchema.methods.addWorkTimes = function (newWorkTimes) {
-  if (this.workTimes.length < 0) {
-    return this.save();
-  } else {
-    const updateWorkTimes = [...this.workTimes];
-    updateWorkTimes.push(newWorkTimes);
-    this.workTimes = updateWorkTimes;
+  if (this.workTimes[this.workTimes.length - 1].endTime === null) {
     return this.save();
   }
+  const updateWorkTimes = [...this.workTimes];
+  updateWorkTimes.push(newWorkTimes);
+  this.workTimes = updateWorkTimes;
+  return this.save();
 };
 
 // Thêm giờ kết thúc làm
