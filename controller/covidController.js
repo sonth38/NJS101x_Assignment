@@ -3,8 +3,7 @@ exports.getIndex = (req, res, next) => {
     res.render('covid/covid', {
         path: '/covid',
         pageTitle: 'Thông tin Covid',
-        alert: null,
-        isAuthenticated: req.session.isLoggedIn
+        alert: null
   });
 };
 
@@ -15,8 +14,7 @@ exports.postTemperature = (req, res, next) => {
             res.render('covid/covid', {
                 path: '/covid',
                 pageTitle: 'Đăng ký thân nhiệt thành công',
-                alert: 'Nhiệt độ',
-                isAuthenticated: req.session.isLoggedIn
+                alert: 'Nhiệt độ'
             });
         })
         .catch(err => console.log(err))
@@ -30,8 +28,7 @@ exports.postInjection = (req, res, next) => {
             res.render('covid/covid', {
                 path: '/covid',
                 pageTitle: 'Cập nhật mũi tiêm thành công',
-                alert: 'Injection',
-                isAuthenticated: req.session.isLoggedIn
+                alert: 'Injection'
             });
         })
         .catch(err => console.log(err))
@@ -44,8 +41,7 @@ exports.postInfect = (req, res, next) => {
             res.render('covid/covid', {
                 path: '/covid',
                 pageTitle: 'Cập nhật mũi tiêm thành công',
-                alert: 'Infect',
-                isAuthenticated: req.session.isLoggedIn
+                alert: 'Infect'
             });
         })
         .catch(err => console.log(err))

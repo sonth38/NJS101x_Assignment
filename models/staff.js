@@ -5,7 +5,7 @@ const staffSchema = new Schema({
   name: {
     type: String,
   },
-  userName: {
+  username: {
     type: String,
   },
   password: {

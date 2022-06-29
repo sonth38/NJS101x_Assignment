@@ -5,7 +5,6 @@ exports.getIndex = (req, res, next) => {
   }
   res.render('home/home', {
     path: '/attendance',
-    pageTitle: 'Trang chủ',
-    isAuthenticated: req.session.isLoggedIn
+    pageTitle: 'Trang chủ'
   });
 };

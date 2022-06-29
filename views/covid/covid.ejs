@@ -22,6 +22,7 @@
                             <input type="time" class="form-control" id="time" name="time" >
                         </div>
                         <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+							<input hidden type="text" name="_csrf" value="<%=csrfToken%>">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         <p><%= alert == 'Nhiệt độ' ? 'Cập nhât nhiệt độ thành công' : ''%></p>
@@ -47,6 +48,7 @@
                             <input type="date" class="form-control" id="dateSecondVaccine" name="dateSecondVaccine" >
                         </div>
                         <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+							<input hidden type="text" name="_csrf" value="<%=csrfToken%>">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         <p><%= alert == 'Injection' ? 'Cập nhật mũi tiêm thành công' : ''%></p>
@@ -64,6 +66,7 @@
                             <input type="date" class="form-control" id="dateRecover" name="dateRecover">
                         </div>
                         <div class="mt-2 d-grid gap-2 col-6 mx-auto">
+							<input hidden type="text" name="_csrf" value="<%=csrfToken%>">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         <p><%= alert == 'Infect' ? 'Cập nhật thông tin thành công' : ''%></p>

@@ -92,7 +92,8 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <button type="submit">Show</button>
+                        <input hidden type="text" name="_csrf" value="<%=csrfToken%>">
+                        <button type="submit">Show</button>
                 </form>
                 <% if (salary != null) { %>
                     <p>Tiền lương tháng: <%= salary %></p>

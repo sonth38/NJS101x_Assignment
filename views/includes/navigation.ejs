@@ -28,6 +28,7 @@
 				<% } else { %>
 					<li class="nav-item main-header__item">
 						<form action="/auth/logout" method="post">
+							<input hidden type="text" name="_csrf" value="<%=csrfToken%>">
 							<button class="btn btn-primary" type="submit">Đăng xuất</button>
 						</form>
 					</li>

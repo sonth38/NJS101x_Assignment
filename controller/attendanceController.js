@@ -8,8 +8,7 @@ exports.getCheckin = (req, res, next) => {
       res.render('attendance/checkin', {
         path: '/attendance',
         pageTitle: 'Điểm danh',
-        staff: staff,
-        isAuthenticated: req.session.isLoggedIn
+        staff: staff
       });
     })
     .catch(err => {
@@ -46,8 +45,7 @@ exports.getCheckinInfor = (req, res, next) => {
     pageTitle: 'Thông tin điểm danh',
     lastStart: Methods.getLastStart(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
-    staff: req.staff,
-    isAuthenticated: req.session.isLoggedIn
+    staff: req.staff
   });
 };
 
@@ -77,8 +75,7 @@ exports.getCheckoutInfo = (req, res, next) => {
     timeWorked,
     workedInDay: Methods.calculateTimeWorked(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
-    staff: req.staff,
-    isAuthenticated: req.session.isLoggedIn
+    staff: req.staff
   });
 };
 
@@ -89,8 +86,7 @@ exports.getLeave = (req, res, next) => {
   res.render('attendance/leave', {
     path: '/attendance',
     pageTitle: 'Nghỉ phép',
-    annualLeave: annualLeave,
-    isAuthenticated: req.session.isLoggedIn
+    annualLeave: annualLeave
   });
 };
 
@@ -100,8 +96,7 @@ exports.postLeave = (req, res, next) => {
     .updateLeave({
       dateLeave: req.body.dateLeave,
       hourLeave: req.body.hourLeave,
-      reasonLeave: req.body.reasonLeave,
-      isAuthenticated: req.session.isLoggedIn
+      reasonLeave: req.body.reasonLeave
     })
     .then(() => {
       res.redirect('/attendance/leaveInfo');
@@ -117,7 +112,6 @@ exports.getLeaveInfo = (req, res, next) => {
   res.render('attendance/leaveInfo', {
     path: '/attendance',
     pageTitle: 'Đăng ký ngày nghỉ thành công',
-    newsLeaveInfo: newsLeaveInfo,
-    isAuthenticated: req.session.isLoggedIn
+    newsLeaveInfo: newsLeaveInfo
   });
 };

@@ -2,8 +2,7 @@ exports.getIndex = (req, res, next) => {
   res.render('staff/staff_form', {
     path: '/staff',
     pageTitle: 'Thông tin cá nhân',
-    staff: req.staff,
-    isAuthenticated: req.session.isLoggedIn
+    staff: req.staff
   });
 };
 
@@ -20,7 +19,6 @@ exports.getStaffInfo = (req, res, next) => {
   res.render('staff/staff_info', {
     path: '/staff',
     pageTitle: 'Thông tin cá nhân',
-    staff: req.staff,
-    isAuthenticated: req.session.isLoggedIn
+    staff: req.staff
   });
 }
