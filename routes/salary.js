@@ -3,8 +3,10 @@ const router = express.Router()
 
 const salaryController = require('../controller/salaryController')
 
-router.get('/', salaryController.getIndex)
-router.post('/', salaryController.postSalary)
+const isAuth = require('../middleware/is-Auth')
+
+router.get('/',isAuth, salaryController.getIndex)
+router.post('/',isAuth, salaryController.postSalary)
 // router.get('/information', staffController.getStaffInfo)
 
 module.exports = router

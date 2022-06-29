@@ -3,9 +3,11 @@ const router = express.Router()
 
 const covidController = require('../controller/covidController')
 
-router.get('/', covidController.getIndex)
-router.post('/temperature', covidController.postTemperature)
-router.post('/injection', covidController.postInjection)
-router.post('/infect', covidController.postInfect)
+const isAuth = require('../middleware/is-Auth')
+
+router.get('/',isAuth, covidController.getIndex)
+router.post('/temperature',isAuth, covidController.postTemperature)
+router.post('/injection',isAuth, covidController.postInjection)
+router.post('/infect',isAuth, covidController.postInfect)
 
 module.exports = router

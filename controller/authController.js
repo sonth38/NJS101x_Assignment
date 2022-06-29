@@ -9,14 +9,22 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  Staff.findById('62a6a6298d2f112f6b3956c3')
+  const username = req.body.username
+  const password = req.body.password
+
+  Staff.findOne({ username: username })
     .then(staff => {
-      req.session.isLoggedIn = true;
-      req.session.staff = staff;
-      req.session.save(err => {
-        console.log(err)
-        res.redirect('/');
-      })
+      if (!staff) {
+        return res.redirect('/auth/login')
+      }
+      if (password == staff.password) {
+        req.session.isLoggedIn = true;
+        req.session.staff = staff;
+        req.session.save(err => {
+          console.log(err)
+          res.redirect('/');
+        })
+      }
     })
     .catch(error => {
       console.log(error);

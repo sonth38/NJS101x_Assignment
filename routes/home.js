@@ -3,6 +3,8 @@ const router = express.Router()
 
 const homeController = require('../controller/homeController')
 
-router.get('/', homeController.getIndex)
+const isAuth = require('../middleware/is-Auth')
+
+router.get('/',isAuth , homeController.getIndex)
 
 module.exports = router

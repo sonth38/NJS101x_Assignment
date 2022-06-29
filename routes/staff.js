@@ -3,8 +3,10 @@ const router = express.Router()
 
 const staffController = require('../controller/staffController')
 
-router.get('/', staffController.getIndex)
-router.post('/', staffController.postStaffUpdate)
-router.get('/information', staffController.getStaffInfo)
+const isAuth = require('../middleware/is-Auth')
+
+router.get('/',isAuth, staffController.getIndex)
+router.post('/',isAuth, staffController.postStaffUpdate)
+router.get('/information',isAuth, staffController.getStaffInfo)
 
 module.exports = router
