@@ -3,6 +3,7 @@ exports.getIndex = (req, res, next) => {
     path: '/staff',
     pageTitle: 'Thông tin cá nhân',
     staff: req.staff,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
 
@@ -20,5 +21,6 @@ exports.getStaffInfo = (req, res, next) => {
     path: '/staff',
     pageTitle: 'Thông tin cá nhân',
     staff: req.staff,
+    isAuthenticated: req.session.isLoggedIn
   });
 }

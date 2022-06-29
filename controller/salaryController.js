@@ -16,7 +16,8 @@ exports.getIndex = (req, res, next) => {
       workTimesLastDay,
       totalTimeWorkEach,
       salary: null,
-      timeWorkSalary: ''
+      timeWorkSalary: '',
+      isAuthenticated: req.session.isLoggedIn
     });
 };
 
@@ -37,6 +38,7 @@ exports.postSalary = (req, res, next) => {
       workTimesLastDay,
       totalTimeWorkEach,
       salary,
-      timeWorkSalary
+      timeWorkSalary,
+      isAuthenticated: req.session.isLoggedIn
     });
   };

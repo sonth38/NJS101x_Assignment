@@ -1,5 +1,5 @@
-const Staff = require('../models/staff')
-const Methods = require('../util/method')
+const Staff = require('../models/staff');
+const Methods = require('../util/method');
 
 // [GET] /check-in
 exports.getCheckin = (req, res, next) => {
@@ -8,7 +8,8 @@ exports.getCheckin = (req, res, next) => {
       res.render('attendance/checkin', {
         path: '/attendance',
         pageTitle: 'Điểm danh',
-        staff: staff
+        staff: staff,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -18,6 +19,7 @@ exports.getCheckin = (req, res, next) => {
 
 // [POST] /check-in/start
 exports.postCheckin = (req, res, next) => {
+  const staffId = req.body.staffId;
   const workPlace = req.body.workPlace;
   const newWorkTimes = {
     startTime: Date.now(),
@@ -25,6 +27,7 @@ exports.postCheckin = (req, res, next) => {
     working: true,
     endTime: null,
   };
+
   req.staff
     .addWorkTimes(newWorkTimes)
     .then(result => {
@@ -44,6 +47,7 @@ exports.getCheckinInfor = (req, res, next) => {
     lastStart: Methods.getLastStart(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
     staff: req.staff,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
 
@@ -51,8 +55,8 @@ exports.getCheckinInfor = (req, res, next) => {
 exports.postCheckout = (req, res, next) => {
   const endWorkTimes = {
     working: false,
-    endTime: new Date()
-  }
+    endTime: new Date(),
+  };
   req.staff
     .addEndWorkTimes(endWorkTimes)
     .then(result => {
@@ -61,33 +65,34 @@ exports.postCheckout = (req, res, next) => {
     .catch(error => {
       console.log(error);
     });
-}
+};
 
 // [GET] /check-out/infor
 exports.getCheckoutInfo = (req, res, next) => {
-  const timeWorked = 
-    Methods.calculateTimeWorked(req.staff).totalTimeWorked
-  
+  const timeWorked = Methods.calculateTimeWorked(req.staff).totalTimeWorked;
+
   res.render('attendance/checkoutInfor', {
     path: '/attendance',
     pageTitle: 'Thông tin điểm danh',
     timeWorked,
     workedInDay: Methods.calculateTimeWorked(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
-    staff: req.staff
+    staff: req.staff,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
 
 // [GET] /leave
 exports.getLeave = (req, res, next) => {
-  const annualLeave = req.staff.annualLeave
+  const annualLeave = req.staff.annualLeave;
 
   res.render('attendance/leave', {
     path: '/attendance',
     pageTitle: 'Nghỉ phép',
-    annualLeave: annualLeave
-  })
-}
+    annualLeave: annualLeave,
+    isAuthenticated: req.session.isLoggedIn
+  });
+};
 
 // [POST] /leave
 exports.postLeave = (req, res, next) => {
@@ -96,6 +101,7 @@ exports.postLeave = (req, res, next) => {
       dateLeave: req.body.dateLeave,
       hourLeave: req.body.hourLeave,
       reasonLeave: req.body.reasonLeave,
+      isAuthenticated: req.session.isLoggedIn
     })
     .then(() => {
       res.redirect('/attendance/leaveInfo');
@@ -107,10 +113,11 @@ exports.postLeave = (req, res, next) => {
 
 // [GET] /check-out/infor
 exports.getLeaveInfo = (req, res, next) => {
-  const newsLeaveInfo = Methods.leaveInfo(req.staff)
+  const newsLeaveInfo = Methods.leaveInfo(req.staff);
   res.render('attendance/leaveInfo', {
     path: '/attendance',
     pageTitle: 'Đăng ký ngày nghỉ thành công',
-    newsLeaveInfo: newsLeaveInfo
+    newsLeaveInfo: newsLeaveInfo,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
