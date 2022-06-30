@@ -1,10 +1,17 @@
 const Staff = require('../models/staff');
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error')
+  if (message.length > 0) {
+    message= message[0]
+  } else {
+    message = null
+  }
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Đăng nhập',
-	  isAuthenticated: false
+	  isAuthenticated: false,
+    errorMessage: message
   });
 };
 
@@ -15,6 +22,7 @@ exports.postLogin = (req, res, next) => {
   Staff.findOne({ username: username })
     .then(staff => {
       if (!staff) {
+        req.flash('error', 'Invalid email or password')
         return res.redirect('/auth/login')
       }
       if (password == staff.password) {
