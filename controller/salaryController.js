@@ -1,4 +1,3 @@
-const Staff = require('../models/staff')
 const Methods = require('../util/method')   
 
 exports.getIndex = (req, res, next) => {
@@ -16,7 +15,8 @@ exports.getIndex = (req, res, next) => {
       workTimesLastDay,
       totalTimeWorkEach,
       salary: null,
-      timeWorkSalary: ''
+      timeWorkSalary: '',
+      manager: req.staff.manager[0]
     });
 };
 
