@@ -1,4 +1,5 @@
 const Staff = require('../models/staff');
+const WorkTime = require('../models/workTime');
 const Methods = require('../util/method');
 
 // [GET] /check-in
@@ -8,7 +9,7 @@ exports.getCheckin = (req, res, next) => {
       res.render('attendance/checkin', {
         path: '/attendance',
         pageTitle: 'Điểm danh',
-        staff: staff
+        staff: staff,
       });
     })
     .catch(err => {
@@ -17,6 +18,7 @@ exports.getCheckin = (req, res, next) => {
 };
 
 // [POST] /check-in/start
+/*
 exports.postCheckin = (req, res, next) => {
   const staffId = req.body.staffId;
   const workPlace = req.body.workPlace;
@@ -37,19 +39,53 @@ exports.postCheckin = (req, res, next) => {
       console.log(error);
     });
 };
+*/
+
+exports.postCheckin = (req, res, next) => {
+  const staffId = req.body.staffId;
+  const workPlace = req.body.workPlace;
+  const workTime = new WorkTime({
+    startTime: Date.now(),
+    workPlace: workPlace,
+    working: true,
+    endTime: null,
+    staffId: staffId,
+  });
+  workTime
+    .save()
+    .then(result => {
+      console.log(result);
+      res.redirect('/attendance/check-in/infor');
+    })
+    .catch(err => console.log(err));
+};
 
 // [GET] /check-in/infor
+/*
 exports.getCheckinInfor = (req, res, next) => {
   res.render('attendance/checkinInfor', {
     path: '/attendance',
     pageTitle: 'Thông tin điểm danh',
     lastStart: Methods.getLastStart(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
-    staff: req.staff
+    staff: req.staff,
+  });
+};
+*/
+
+exports.getCheckinInfor = (req, res, next) => {
+  WorkTime.find().then(workTime => {
+    res.render('attendance/checkinInfor', {
+      path: '/attendance',
+      pageTitle: 'Thông tin điểm danh',
+      lastStart: workTime[workTime.length - 1],
+      staff: req.staff,
+    });
   });
 };
 
 // [POST] /check-out
+/*
 exports.postCheckout = (req, res, next) => {
   const endWorkTimes = {
     working: false,
@@ -64,8 +100,25 @@ exports.postCheckout = (req, res, next) => {
       console.log(error);
     });
 };
+*/
+
+exports.postCheckout = (req, res, next) => {
+  WorkTime.find()
+    .then(workTime => {
+      const lastedCheckin = workTime[workTime.length - 1];
+      lastedCheckin.working = false;
+      lastedCheckin.endTime = new Date();
+
+      return lastedCheckin.save().then(() => {
+        console.log('UPDATED CheckOut!');
+        res.redirect('/attendance/check-out/infor');
+      });
+    })
+    .catch(err => console.log(err));
+};
 
 // [GET] /check-out/infor
+/*
 exports.getCheckoutInfo = (req, res, next) => {
   const timeWorked = Methods.calculateTimeWorked(req.staff).totalTimeWorked;
 
@@ -75,8 +128,25 @@ exports.getCheckoutInfo = (req, res, next) => {
     timeWorked,
     workedInDay: Methods.calculateTimeWorked(req.staff),
     isStarted: Methods.checkinStarted(req.staff),
-    staff: req.staff
+    staff: req.staff,
   });
+};
+*/
+
+exports.getCheckoutInfo = (req, res, next) => {
+  WorkTime.find()
+    .then(workTime => {
+      const timeWorked = Methods.calculateTimeWorked(workTime).totalTimeWorked;
+
+      res.render('attendance/checkoutInfor', {
+        path: '/attendance',
+        pageTitle: 'Thông tin điểm danh',
+        timeWorked: timeWorked,
+        workedInDay: Methods.calculateTimeWorked(workTime),
+        staff: req.staff,
+      })
+    })
+    .catch(err => console.log(err));
 };
 
 // [GET] /leave
@@ -86,7 +156,7 @@ exports.getLeave = (req, res, next) => {
   res.render('attendance/leave', {
     path: '/attendance',
     pageTitle: 'Nghỉ phép',
-    annualLeave: annualLeave
+    annualLeave: annualLeave,
   });
 };
 
@@ -96,7 +166,7 @@ exports.postLeave = (req, res, next) => {
     .updateLeave({
       dateLeave: req.body.dateLeave,
       hourLeave: req.body.hourLeave,
-      reasonLeave: req.body.reasonLeave
+      reasonLeave: req.body.reasonLeave,
     })
     .then(() => {
       res.redirect('/attendance/leaveInfo');
@@ -112,6 +182,6 @@ exports.getLeaveInfo = (req, res, next) => {
   res.render('attendance/leaveInfo', {
     path: '/attendance',
     pageTitle: 'Đăng ký ngày nghỉ thành công',
-    newsLeaveInfo: newsLeaveInfo
+    newsLeaveInfo: newsLeaveInfo,
   });
 };

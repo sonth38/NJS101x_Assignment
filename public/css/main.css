@@ -55,6 +55,7 @@ main {
 
 .pagination {
   text-align: center;
+  display: block;
 }
 
 .pagination a {

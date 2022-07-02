@@ -24,8 +24,8 @@ class Methods {
   };
 
   // Tính thời gian làm việc
+  /*
   calculateTimeWorked = staff => {
-    let totalTimeWorked = 0
     const workTimeInDay = []
     const WorkTimesLength = staff.workTimes.length;
     let day = staff.workTimes[WorkTimesLength - 1].startTime.getDate();
@@ -38,17 +38,50 @@ class Methods {
       return workTimeInDay;
     });
 
+    let totalTimeWorked = 0
     workTimeInDay.forEach(workTime => {
       // Tính số giờ làm việc
-      if (workTime.endTime != null) {
+      
         const minutesStart =
           workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
         const minutesEnd =
           workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+
         const totalHourCalculate = (minutesEnd - minutesStart) / 60;
 
-        return (totalTimeWorked = (totalTimeWorked + totalHourCalculate).toFixed(2));
+        return (totalTimeWorked= (totalTimeWorked + totalHourCalculate));
+      
+    });
+    return { totalTimeWorked, workTimeInDay, day };
+  };
+  */
+
+  calculateTimeWorked = workTimes => {
+    const workTimeInDay = []
+    const WorkTimesLength = workTimes.length;
+    let day = workTimes[WorkTimesLength - 1].startTime.getDate();
+
+    // Lấy ra được các thời điểm checkin trong ngày
+    workTimes.forEach(workTime => {
+      if (day === workTime.startTime.getDate()) {
+        workTimeInDay.push(workTime);
       }
+      return workTimeInDay;
+    });
+
+    let totalTimeWorked = 0
+    workTimeInDay.forEach(workTime => {
+      // Tính số giờ làm việc
+      
+        const minutesStart =
+          workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
+        const minutesEnd =
+          workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+
+        const totalHourCalculate = (minutesEnd - minutesStart) / 60;
+
+        return (totalTimeWorked= (totalTimeWorked + totalHourCalculate));
+      
     });
     return { totalTimeWorked, workTimeInDay, day };
   };
@@ -61,14 +94,14 @@ class Methods {
   }
 
   // Tính overTime
-  overTime = staff => {
+  overTime = workTimes => {
     let totalTimeWorkedLastDay = 0
     let overTime = 0
-    const WorkTimesLength = staff.workTimes.length;
-    let lastedDay = staff.workTimes[WorkTimesLength - 1].startTime.getDate();
+    const WorkTimesLength = workTimes.length;
+    let lastedDay = workTimes[WorkTimesLength - 1].startTime.getDate();
     
     // Lấy ra ngày làm việc gần đây nhất
-    const workTimesLastDay = staff.workTimes.filter((workTime) => {
+    const workTimesLastDay = workTimes.filter((workTime) => {
       return workTime.startTime.getDate() == lastedDay
     })
     
@@ -90,12 +123,12 @@ class Methods {
     return { overTime, workTimesLastDay }
   }
 
-  getSalary = (month, staff) => {
+  getSalary = (month, staff, workTimes) => {
     
     // Lấy ra workTime có tháng được chọn
     const monthNumber = Number(month)
 
-    const workTimeInMonth = staff.workTimes.filter(workTime => {
+    const workTimeInMonth = workTimes.filter(workTime => {
       if (workTime.endTime !== null) {
         return (workTime.startTime.getMonth() + 1 == monthNumber)
       }

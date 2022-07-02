@@ -38,6 +38,9 @@ const staffSchema = new Schema({
       working: { type: Boolean },
       endTime: { type: Date },
     },
+    {
+      workTimeId: { type: Schema.Types.ObjectId, ref: 'WorkTime', required: true},
+    }
   ],
   leaveInfoList: [
     {
