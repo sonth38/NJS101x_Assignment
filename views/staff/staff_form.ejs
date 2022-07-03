@@ -6,7 +6,7 @@
     <main>
         <div class="container col-8">
             <div class="row ">
-                <form action="/staff" method="POST">
+                <form action="/staff" method="POST" enctype="multipart/form-data">
                     <div class="mb-3 row">
                         <label for="staffID" class="col-sm-2 col-form-label">ID</label>
                         <div class="col-sm-10">
@@ -49,10 +49,16 @@
                             <input disabled type="text" class="form-control" id="annualLeave" name="annualLeave" value="<%=staff.annualLeave%>">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <!-- <div class="mb-3 row">
                         <label for="image" class="col-sm-2 col-form-label">Ảnh đại diện</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="image" name="image" value="<%=staff.image%>">
+                        </div>
+                    </div> -->
+                    <div class="mb-3 row">
+                        <label for="image" class="col-sm-2 col-form-label">Ảnh đại diện</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="image" name="image">
                         </div>
                     </div>
                     <div class="mt-1 d-grid gap-2 col-6 mx-auto">

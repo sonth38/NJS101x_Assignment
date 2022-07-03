@@ -72,7 +72,7 @@ class Methods {
     let totalTimeWorked = 0
     workTimeInDay.forEach(workTime => {
       // Tính số giờ làm việc
-      
+      if (workTime.endTime != null) {
         const minutesStart =
           workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
         const minutesEnd =
@@ -81,6 +81,7 @@ class Methods {
         const totalHourCalculate = (minutesEnd - minutesStart) / 60;
 
         return (totalTimeWorked= (totalTimeWorked + totalHourCalculate));
+      }
       
     });
     return { totalTimeWorked, workTimeInDay, day };

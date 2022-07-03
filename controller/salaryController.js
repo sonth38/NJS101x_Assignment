@@ -2,7 +2,7 @@ const Methods = require('../util/method');
 const Staff = require('../models/staff');
 const WorkTime = require('../models/workTime');
 
-const ITEMS_PER_PAGE = 2;
+// const ITEMS_PER_PAGE = 1;
 /*
 exports.getIndex = (req, res, next) => {
   WorkTime.find()
@@ -35,7 +35,19 @@ exports.getIndex = (req, res, next) => {
 */
 
 exports.getIndex = (req, res, next) => {
+  let ITEMS_PER_PAGE = +req.query.line || 1
+
+  const page = +req.query.page || 1;
+  let totalItems;
+
   WorkTime.find()
+    .count()
+    .then(numTimes => {
+      totalItems = numTimes;
+      return WorkTime.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
     .then(workTime => {
       const timeWorked =
         Methods.calculateTimeWorked(workTime).totalTimeWorked.toFixed(2);
@@ -54,6 +66,13 @@ exports.getIndex = (req, res, next) => {
         salary: null,
         timeWorkSalary: '',
         manager: req.staff.manager[0],
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+        line: ITEMS_PER_PAGE
       });
     })
     .catch(err => console.log(err));
@@ -89,13 +108,30 @@ exports.postSalary = (req, res, next) => {
 */
 
 exports.postSalary = (req, res, next) => {
+  let ITEMS_PER_PAGE = +req.query.line || 1
+
+  const page = +req.query.page || 1;
+  let totalItems;
+
   WorkTime.find()
+    .count()
+    .then(numTimes => {
+      totalItems = numTimes;
+      return WorkTime.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
     .then(workTime => {
-      const timeWorked = Methods.calculateTimeWorked(workTime).totalTimeWorked.toFixed(2);
+      const timeWorked =
+        Methods.calculateTimeWorked(workTime).totalTimeWorked.toFixed(2);
       const overTime = Methods.overTime(workTime).overTime;
       const workTimesLastDay = Methods.overTime(workTime).workTimesLastDay;
       const totalTimeWorkEach = Methods.overTime(workTime).totalTimeWorkEach;
-      const salary = Methods.getSalary(req.body.month, req.staff, workTime).salary;
+      const salary = Methods.getSalary(
+        req.body.month,
+        req.staff,
+        workTime
+      ).salary;
       const timeWorkSalary = Methods.getSalary(
         req.body.month,
         req.staff,
@@ -113,6 +149,13 @@ exports.postSalary = (req, res, next) => {
         salary,
         timeWorkSalary,
         manager: req.staff.manager[0],
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+        line: ITEMS_PER_PAGE
       });
     })
     .catch(err => console.log(err));

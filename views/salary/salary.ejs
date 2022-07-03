@@ -49,10 +49,9 @@
                 <p>Tổng số giờ làm trong ngày: Chưa kết thúc</p>
                 <% } %> 
         </div>
-        <section class="pagination">
-            <a href="/salary/?page=1">1</a>
-            <a href="/salary/?page=2">2</a>
-        </section>
+        <%- include('../includes/pagination.ejs', {currentPage: currentPage, previousPage: previousPage,
+            hasPreviousPage: hasPreviousPage, hasNextPage: hasNextPage, nextPage: nextPage, lastPage:
+            lastPage} )%>
         <hr>
         <!-- Hiện thị thông tin xin nghỉ -->
         <div class="container">

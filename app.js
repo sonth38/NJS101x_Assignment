@@ -5,6 +5,7 @@ const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
 const flash = require('connect-flash')
+const multer = require('multer')
 
 const router = require('./routes/index');
 
@@ -19,8 +20,32 @@ const store = new MongoDBStore({
 
 csrfProtection = csrf()
 
+// Cấu hình nhận file
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, 'image');
+    },
+    filename: function(req, file, cb) {
+      cb(null, Date.now()+ '-' + file.originalname);
+    },
+  });
+
+// const fileFilter = (req, file, cb) => {
+// if (
+//     file.mimetype === 'image/png' ||
+//     file.mimetype === 'image/jpg' ||
+//     file.mimetype === 'image/jpeg'
+// ) {
+//     cb(null, true);
+// } else {
+//     cb(null, false);
+// }
+// };
+
 //  Parse body
 app.use(express.urlencoded({extended: true}))
+app.use(multer({ storage: storage }).single('image'))
+
 app.use(express.json())
 
 // add template engine EJS
@@ -29,6 +54,7 @@ app.set('views', 'views')
 
 // Đặt static đến folder public
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/image', express.static(path.join(__dirname, 'image')));
 
 // Cấu hình session
 app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store: store }))
