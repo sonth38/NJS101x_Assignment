@@ -25,6 +25,9 @@
 					<li class="nav-item main-header__item">
 						<a class="nav-link <%= path == '/login' ? 'active' : ''%>" href="/auth/login">Đăng nhập</a>
 					</li>
+					<li class="nav-item main-header__item">
+						<a class="nav-link <%= path == '/signup' ? 'active' : ''%>" href="/auth/signup">Đăng ký</a>
+					</li>
 				<% } else { %>
 					<li class="nav-item main-header__item">
 						<form action="/auth/logout" method="post">

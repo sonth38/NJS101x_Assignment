@@ -4,17 +4,11 @@ const Methods = require('../util/method');
 
 // [GET] /check-in
 exports.getCheckin = (req, res, next) => {
-  Staff.findOne()
-    .then(staff => {
-      res.render('attendance/checkin', {
-        path: '/attendance',
-        pageTitle: 'Điểm danh',
-        staff: staff,
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  res.render('attendance/checkin', {
+    path: '/attendance',
+    pageTitle: 'Điểm danh',
+    staff: req.staff,
+  });
 };
 
 // [POST] /check-in/start

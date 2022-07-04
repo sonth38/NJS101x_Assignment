@@ -56,6 +56,9 @@
         <!-- Hiện thị thông tin xin nghỉ -->
         <div class="container">
             <h4>Danh sách đăng ký nghỉ phép</h4>
+            <% if (staff.annualLeave == 12) { %>
+                <p>Bạn chưa nghỉ phép</p>
+            <% } else { %>
             <table class="table">
                 <tr>
                     <th>Ngày</th>
@@ -76,6 +79,7 @@
                     </tr>
                 <%})%>
             </table>
+            <% } %>
         </div>
         <hr>
         <div class="container">
@@ -107,10 +111,12 @@
             </div>
         </div>
         <hr>
+        <% if (staff.position == 'staff') {%>
         <div class="container">
             <p>ID quản lý: <%= manager.managerId %></p>
             <p>Tên quản lý: <%= manager.managerName %></p>
         </div>
+        <% } %>
 
     </main>
 

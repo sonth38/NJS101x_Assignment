@@ -13,4 +13,4 @@ const workTimeSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('WorkTime', workTimeSchema);
+module.exports = mongoose.model('workTimes', workTimeSchema);

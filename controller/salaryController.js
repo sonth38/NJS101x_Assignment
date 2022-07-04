@@ -35,16 +35,18 @@ exports.getIndex = (req, res, next) => {
 */
 
 exports.getIndex = (req, res, next) => {
+  const staffId = req.staff._id
+  console.log(req.staff.leaveInfoList)
   let ITEMS_PER_PAGE = +req.query.line || 1
 
   const page = +req.query.page || 1;
   let totalItems;
 
-  WorkTime.find()
+  WorkTime.find({ staffId: staffId })
     .count()
     .then(numTimes => {
       totalItems = numTimes;
-      return WorkTime.find()
+      return WorkTime.find({ staffId: staffId })
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
     })
@@ -108,16 +110,18 @@ exports.postSalary = (req, res, next) => {
 */
 
 exports.postSalary = (req, res, next) => {
+  const staffId = req.staff._id
+
   let ITEMS_PER_PAGE = +req.query.line || 1
 
   const page = +req.query.page || 1;
   let totalItems;
 
-  WorkTime.find()
+  WorkTime.find({ staffId: staffId })
     .count()
     .then(numTimes => {
       totalItems = numTimes;
-      return WorkTime.find()
+      return WorkTime.find({ staffId: staffId })
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
     })

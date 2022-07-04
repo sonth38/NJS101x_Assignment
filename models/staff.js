@@ -33,13 +33,12 @@ const staffSchema = new Schema({
   },
   workTimes: [
     {
-      startTime: { type: Date },
-      workPlace: { type: String },
-      working: { type: Boolean },
-      endTime: { type: Date },
-    },
-    {
-      workTimeId: { type: Schema.Types.ObjectId, ref: 'WorkTime', required: true},
+      workTimeId: 
+      { 
+        type: Schema.Types.ObjectId,
+        ref: 'workTimes',
+        required: true
+      },
     }
   ],
   leaveInfoList: [
@@ -80,6 +79,7 @@ const staffSchema = new Schema({
       managerName: { type: String },
     },
   ],
+  position: { type: String }
 });
 
 // Thêm giờ điểm danh

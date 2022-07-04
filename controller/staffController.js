@@ -3,22 +3,20 @@ const fileHelper = require('../util/file');
 
 
 exports.getIndex = (req, res, next) => {
-  Staff.findById('62a6a6298d2f112f6b3956c3')
-    .then(staff => {
-      res.render('staff/staff_form', {
-        path: '/staff',
-        pageTitle: 'Thông tin cá nhân',
-        staff: staff
-      });
-    })
-    .catch(err => console.log(err))
+  res.render('staff/staff_form', {
+    path: '/staff',
+    pageTitle: 'Thông tin cá nhân',
+    staff: req.staff
+  });
 };
 
 exports.postStaffUpdate = (req, res, next) => {
+  const staffId = req.staff._id
   const image = req.file
 
-  Staff.findById('62a6a6298d2f112f6b3956c3')
+  Staff.findOne({ _id: staffId })
     .then(staff => {
+      console.log(staff)
       if (image) {
         fileHelper.deleteFile(staff.image);
         staff.image = image.path;
@@ -33,11 +31,9 @@ exports.postStaffUpdate = (req, res, next) => {
 
 
 exports.getStaffInfo = (req, res, next) => {
-  Staff.findById('62a6a6298d2f112f6b3956c3').then(staff => {
-    return res.render('staff/staff_info', {
+  res.render('staff/staff_info', {
         path: '/staff',
         pageTitle: 'Thông tin cá nhân',
-        staff: staff
+        staff: req.staff
   })
-  });
 }
