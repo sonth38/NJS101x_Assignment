@@ -4,6 +4,7 @@ const staffRouter = require('./staff')
 const salaryRouter = require('./salary')
 const covidRouter = require('./covid')
 const authRouter = require('./auth')
+const confirmRouter = require('./confirmSalary')
 
 function router(app) {
     app.use('/attendance', attendanceRouter)
@@ -11,6 +12,7 @@ function router(app) {
     app.use('/salary', salaryRouter)
     app.use('/covid', covidRouter)
     app.use('/auth', authRouter)
+    app.use('/manageStaff', confirmRouter)
     app.use('/', homeRouter)
 }
 

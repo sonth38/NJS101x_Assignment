@@ -5,7 +5,22 @@
     <%- include('../includes/navigation.ejs') %>
     <main>
         <div class="container">
+            <% if (staff.position == 'manager') { %>
             <div class="row">
+                <h3>Thông tin covid của nhân viên</h3>
+                <ul >
+                    <% staffNV.forEach(staff => { %>
+                        <li class="orders__item">
+                            <h4><%= staff.name %> - # <%= staff._id %>- <a href="/covid/<%=staff._id%>">Download</a></h4>
+
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <hr>
+            <% } %>
+            <div class="row">
+                <!-- Thông tin thân nhiệt -->
                 <div class="col-md-4 col-sm-12">
                     <form action="/covid/temperature" method="post">
                         <h5>Thông tin thân nhiệt</h5>
@@ -28,6 +43,7 @@
                         <p><%= alert == 'Nhiệt độ' ? 'Cập nhât nhiệt độ thành công' : ''%></p>
                     </form>
                 </div>
+                <!-- Thông tin mũi tiêm -->
                 <div class="col-md-4 col-sm-12">
                     <form action="/covid/injection" method="post">
                         <h5>Thông tin mũi tiêm</h5>
@@ -54,6 +70,7 @@
                         <p><%= alert == 'Injection' ? 'Cập nhật mũi tiêm thành công' : ''%></p>
                     </form>
                 </div>
+                <!-- Thông tin dương tính covid -->
                 <div class="col-md-4 col-sm-12">
                     <form action="/covid/infect" method="post">
                         <h5>Thông tin dương tính</h5>

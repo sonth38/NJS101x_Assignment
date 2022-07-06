@@ -64,13 +64,22 @@ app.use(flash())
 
 app.use((req, res, next) => {
     if (!req.session.staff) {
-        return next()
+      res.locals.position = false;
+      return next()
     }
     Staff.findById(req.session.staff._id)
-    .then(staff => {
+    .then((staff) => {
+      if (!staff) {
+          return next();
+      }
       req.staff = staff;
-      next()
-    })
+      if (staff.position === 'manager') {
+          res.locals.position = 'manager';
+          return next();
+      }
+      res.locals.position = 'staff';
+      next();
+  })
     .catch(error => {
       console.log(error);
     });

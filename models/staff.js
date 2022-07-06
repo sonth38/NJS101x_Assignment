@@ -50,15 +50,10 @@ const staffSchema = new Schema({
   ],
   bodyTemperature: [
     {
-      temperature: {
-        type: Number,
-      },
-      date: {
-        type: Date,
-      },
-      time: {
-        type: String,
-      },
+      temperature: { type: Number },
+      date: { type: Date },
+      time: { type: String },
+      managerId: { type: String },
     },
   ],
   vaccineInfo: [
@@ -75,8 +70,7 @@ const staffSchema = new Schema({
   ],
   manager: [
     {
-      managerId: { type: Schema.Types.ObjectId },
-      managerName: { type: String },
+      managerId: { type: Schema.Types.ObjectId ,  ref: 'workTimes'},
     },
   ],
   position: { type: String }

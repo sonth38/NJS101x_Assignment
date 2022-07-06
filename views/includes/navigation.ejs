@@ -19,6 +19,11 @@
 				<li class="nav-item main-header__item">
 					<a class="nav-link <%= path == '/covid' ? 'active' : ''%>" href="/covid">Thông tin Covid</a>
 				</li>
+				<% if (position == 'manager') { %>
+					<li class="nav-item main-header__item">
+						<a class="nav-link <%= path == '/manageStaff' ? 'active' : ''%>" href="/manageStaff">Xác nhận giờ làm</a>
+					</li>
+				<% } %>
 			</ul>
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<% if(!isAuthenticated) { %>

@@ -10,4 +10,6 @@ router.post('/temperature',isAuth, covidController.postTemperature)
 router.post('/injection',isAuth, covidController.postInjection)
 router.post('/infect',isAuth, covidController.postInfect)
 
+router.get('/:staffId',isAuth, covidController.getStaffCovid)
+
 module.exports = router
