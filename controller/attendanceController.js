@@ -8,6 +8,7 @@ exports.getCheckin = (req, res, next) => {
     path: '/attendance',
     pageTitle: 'Điểm danh',
     staff: req.staff,
+    messageCheckin: ''
   });
 };
 
@@ -38,20 +39,36 @@ exports.postCheckin = (req, res, next) => {
 exports.postCheckin = (req, res, next) => {
   const staffId = req.body.staffId;
   const workPlace = req.body.workPlace;
-  const workTime = new WorkTime({
-    startTime: Date.now(),
-    workPlace: workPlace,
-    working: true,
-    endTime: null,
-    staffId: staffId,
-  });
-  workTime
-    .save()
-    .then(result => {
-      console.log(result);
-      res.redirect('/attendance/check-in/infor');
-    })
-    .catch(err => console.log(err));
+  WorkTime.find({ staffId: staffId }).then(workTime => {
+    const lastWorkTime = workTime[workTime.length - 1]
+    console.log('lastWorkTime', lastWorkTime)
+    if (lastWorkTime.endTime !== null) {
+      
+      const newworkTime = new WorkTime({
+        startTime: Date.now(),
+        workPlace: workPlace,
+        working: true,
+        endTime: null,
+        staffId: staffId,
+      });
+      newworkTime
+        .save()
+        .then(result => {
+          console.log(result);
+          res.redirect('/attendance/check-in/infor');
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log('Chưa checkout lần trước')
+      return res.render('attendance/checkin', {
+        path: '/attendance',
+        pageTitle: 'Điểm danh',
+        staff: req.staff,
+        messageCheckin: 'Vui lòng checkout trước khi checkin'
+      });
+    }
+  })
+  
 };
 
 // [GET] /check-in/infor
