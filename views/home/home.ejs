@@ -4,7 +4,11 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
+        <% if (confirmed) { %>
+            <h2 class="index__title">Tháng này đã được tính lương </h2>
+        <%}else{%>
         <%- include('../includes/checkin-checkout.ejs') %>
+        <% } %>
     </main>
 
 <%- include('../includes/end.ejs') %>

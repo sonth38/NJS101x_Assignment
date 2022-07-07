@@ -7,6 +7,7 @@ router.get('/', isAuth, confirmController.getIndex)
 router.post('/', isAuth, confirmController.postStaff)
 
 router.post('/postDeleteWorkTime', isAuth, confirmController.postDeleteWorkTime);
+router.post('/comfirmTimeWork', isAuth, confirmController.postComfirmTimeWork);
 
 
 module.exports = router

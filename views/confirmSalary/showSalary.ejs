@@ -1,72 +1,92 @@
 <%- include('../includes/head.ejs') %>
-</head>
+    </head>
 
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <main>
-        <!-- Hiện thị thông tin giờ làm -->
-        <div class="container">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Ngày</th>
-                    <th scope="col">Nơi làm việc</th>
-                    <th scope="col">Giờ bắt đầu</th>
-                    <th scope="col">Giờ kết thúc</th>
-                    <th scope="col">Giờ làm thêm</th>
-                    <th scope="col">Xóa</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <h4>Thông tin giờ làm</h4>
-                    <% workTimesLastDay.forEach(workTime=>{%>
-                        <tr>
-                            <td>
-                                <%=workTime.startTime.getDate()%>
-                            </td>
-                            <td>
-                                <%= workTime.workPlace==='home' ? ' Nhà' : workTime.workPlace==='company' ? ' Công ty'
-                                : ' Khách Hàng' %>
-                            </td>
-                            <td>
-                                <%=workTime.startTime.getHours()%>:<%=workTime.startTime.getMinutes()%>'
-                            </td>
-                            <% if (workTime.endTime) { %>
-                            <td>
-                                <%=workTime.endTime.getHours()%>:<%=workTime.endTime.getMinutes()%>'
-                            </td>
-                            <% } else { %>
-                            <td>
-                                --
-                            </td>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <main>
+                <!-- Hiện thị thông tin giờ làm -->
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Ngày</th>
+                                <th scope="col">Nơi làm việc</th>
+                                <th scope="col">Giờ bắt đầu</th>
+                                <th scope="col">Giờ kết thúc</th>
+                                <th scope="col">Giờ làm thêm</th>
+                                <th scope="col">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <h4>Thông tin giờ làm</h4>
+                            <% workTimesLastDay.forEach(workTime=>{%>
+                                <tr>
+                                    <td>
+                                        <%=workTime.startTime.getDate()%>
+                                    </td>
+                                    <td>
+                                        <%= workTime.workPlace==='home' ? ' Nhà' : workTime.workPlace==='company'
+                                            ? ' Công ty' : ' Khách Hàng' %>
+                                    </td>
+                                    <td>
+                                        <%=workTime.startTime.getHours()%>:<%=workTime.startTime.getMinutes()%>'
+                                    </td>
+                                    <% if (workTime.endTime) { %>
+                                        <td>
+                                            <%=workTime.endTime.getHours()%>:<%=workTime.endTime.getMinutes()%>'
+                                        </td>
+                                        <td>
+                                            <% const hoursEnd=workTime.endTime.getHours(); const
+                                                hoursStart=workTime.startTime.getHours(); const
+                                                totalTimeWork=(hoursEnd* 60 +workTime.endTime.getMinutes()) -
+                                                (hoursStart*60 + workTime.startTime.getMinutes()); %>
+                                                <%= totalTimeWork/60 - 8 < 0 ? 0 : (totalTimeWork/60 -
+                                                    8).toFixed(2) %>
+                                        </td>
+                                        <td>
+                                            <form action="/manageStaff/postDeleteWorkTime" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                <input type="hidden" name="workTime" value="<%=workTime._id%>">
+                                                <input type="hidden" name="staffId" value="<%=staff._id%>">
+                                                <button <%= confirmed ? "disabled" : "" %> class="btn btn-danger" type="submit">Xóa</button>
+                                            </form>
+                                        </td>
+                                        <% } else { %>
+                                            <td>
+                                                --
+                                            </td>
+                                            <td>
+                                                --
+                                            </td>
+                                            <td>
+                                                --
+                                            </td>
+                                            <% } %>
+                                               
+                                                
+                                                
+                                </tr>
+                                <% } )%>
+                        </tbody>
+                    </table>
+                    <p>Số giờ làm thêm trong ngày: <%=overTime%>
+                    </p>
+                    <% if (timeWorked) { %>
+                        <p>Tổng số giờ làm trong ngày: <%=timeWorked%>
+                        </p>
+                        <% } else { %>
+                            <p>Tổng số giờ làm trong ngày: Chưa kết thúc</p>
                             <% } %>
-                            <td >
-                                <% const hoursEnd=workTime.endTime.getHours(); const
-                                    hoursStart=workTime.startTime.getHours(); const totalTimeWork=(hoursEnd* 60
-                                    +workTime.endTime.getMinutes()) - (hoursStart*60 +
-                                    workTime.startTime.getMinutes()); %>
-                                    <%= totalTimeWork/60 - 8 < 0 ? 0 : (totalTimeWork/60 - 8).toFixed(2) %>
-                            </td>
-                            <td >
-                                <form action="/manageStaff/postDeleteWorkTime" method="POST">
-                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                                    <input type="hidden" name="workTime" value="<%=workTime._id%>">
-                                    <input type="hidden" name="staffId" value="<%=staff._id%>">
-                                    <button class="btn-danger" type="submit">Xóa</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <% } )%>
-                </tbody>
-            </table>
-                <p>Số giờ làm thêm trong ngày: <%=overTime%></p>
-                <% if (timeWorked) { %>
-                <p>Tổng số giờ làm trong ngày: <%=timeWorked%></p>
-                <% } else { %>
-                <p>Tổng số giờ làm trong ngày: Chưa kết thúc</p>
-                <% } %> 
-        </div>
+                            
+                    <form style="text-align:center" class="form-control"
+                        action="/manageStaff/comfirmTimeWork" method="POST">
+                        <button class="btn" type="submit">Xác nhận</button>
+                        <input type="hidden" name="staffId" value="<%= staff._id%>">
+                        <input type="hidden" name="month" value=<%=month%>>
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    </form>
+                </div>
 
-    </main>
+            </main>
 
-<%- include('../includes/end.ejs') %>
+            <%- include('../includes/end.ejs') %>

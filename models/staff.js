@@ -73,7 +73,13 @@ const staffSchema = new Schema({
       managerId: { type: Schema.Types.ObjectId ,  ref: 'workTimes'},
     },
   ],
-  position: { type: String }
+  position: { type: String },
+  isConfirm: [
+    {
+        confirmed: { type: Boolean },
+        month: { type: Number },
+    },
+], 
 });
 
 // Thêm giờ điểm danh

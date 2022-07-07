@@ -156,6 +156,35 @@ class Methods {
     const salary = staff.salaryScale * 3000000 + timeWorkSalary * 200000
     return { salary, timeWorkSalary}
   };
+
+  confirmSalary = (workTimes, month) => {
+    let totalTimeWorkedLastDay = 0
+    let overTime = 0
+    const WorkTimesLength = workTimes.length;
+    let lastedDay = workTimes[WorkTimesLength - 1].startTime.getDate();
+    
+    // Lấy ra ngày làm việc trong tháng được chọn
+    const workTimesInMonth = workTimes.filter((workTime) => {
+      return workTime.startTime.getMonth() + 1  == month
+    })
+    
+    // Tính tổng thời giam làm việc tháng được chọn
+    workTimesInMonth.forEach(workTime => {
+      // Tính số giờ làm việc
+      if (workTime.endTime != null) {
+        const minutesStartLastDay =
+          workTime.startTime.getHours() * 60 + workTime.startTime.getMinutes();
+        const minutesEndLastDay =
+          workTime.endTime.getHours() * 60 + workTime.endTime.getMinutes();
+        const totalHourCalculateLastDay = (minutesEndLastDay - minutesStartLastDay) / 60;
+        return (totalTimeWorkedLastDay = totalTimeWorkedLastDay + totalHourCalculateLastDay);
+      }
+    });
+    if (totalTimeWorkedLastDay > 8) {
+      return overTime = totalTimeWorkedLastDay - 8
+    }
+    return { overTime, workTimesInMonth }
+  }
 }
 
 module.exports = new Methods();
